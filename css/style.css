@@ -1,0 +1,15 @@
+th{ 
+    color:#fff;
+}
+.dropdown {
+    position: relative;
+    width: 10rem;
+    height: 1rem;
+    display: inline-block;
+  }
+
+.head{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    height: 5rem;
+}

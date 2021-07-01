@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="./js/script.js"></script>
+    <link rel="stylesheet" href="./css/style.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<div class="head">
+    <div class="dropdown">
+        <label for="myInput">Buscar Seccion</label>
+        <select id="myInput" onclick="myFunction()">
+            <option value="none" default>Seleccionar</option> 
+            <option value="belleza">belleza</option>
+            <option value="limpieza">limpieza</option>
+            <option value="jardineria">jardineria</option>
+        </select>
+    </div>
+    <div>
+        <label for="myInput2">Buscar por NOMBRE</label>
+        <input id="myInput2" onkeyup="myFunction2()" placeholder="Search for names.."> 
+    </div>
+</div>
+
+<table class="table table-striped">
+    <tr  class="bg-info">
+        <th data-column="ID_PROD" data-order="desc">ID_PROD &#9650</th>
+        <th data-column="SECCION" data-order="desc">SECCION &#9650</th>
+        <th data-column="NOMBRE" data-order="desc">NOMBRE &#9650</th>
+        <th data-column="PRECIO" data-order="desc">PRECIO &#9650</th>
+    </tr>
+
+    <tbody id="myTable">
+        
+    </tbody>
+</table>
+
+<script>
+    //Los datos que iran en la tabla
+    var myArray= [
+    {'ID_PROD'	:	'03'	,	'SECCION'	:	'belleza'	,	'NOMBRE':	'delineador',	'PRECIO'	:	12},
+    {'ID_PROD'	:	'01'	,	'SECCION'	:	'belleza'	,	'NOMBRE':	'labial'	,	'PRECIO'	:	12},
+    {'ID_PROD'	:	'02'	,	'SECCION'	:	'belleza'	,	'NOMBRE':   'rubor'	,	'PRECIO'	:	15},
+    {'ID_PROD'	:	'04'	,	'SECCION'	:	'belleza'	,	'NOMBRE':	'base' 	,	'PRECIO'	:	17},
+    {'ID_PROD'	:	'05'	,	'SECCION'	:	'belleza'	,	'NOMBRE':	'esmalte' 	,	'PRECIO'	:	28},
+    {'ID_PROD'	:	'06'	,	'SECCION'	:	'belleza'	,	'NOMBRE':	'exfoliante'	,	'PRECIO'	:	43},
+    {'ID_PROD'	:	'07'	,	'SECCION'	:	'belleza'	,	'NOMBRE':	'balsamo'	,	'PRECIO'	:	56},
+    {'ID_PROD'	:	'08'	,	'SECCION'	:	'limpieza'	,	'NOMBRE':	'esponja'	,	'PRECIO'	:	43},
+    {'ID_PROD'	:	'09'	,	'SECCION'	:	'limpieza'	,	'NOMBRE':	'detergente liquido'	,	'PRECIO'	:	67},
+    {'ID_PROD'	:	'10',	'SECCION'	:	'limpieza'	,	'NOMBRE':	'limpiador de vidrios'	,	'PRECIO'	:	98},
+    {'ID_PROD'	:	'11',	'SECCION'	:	'limpieza'	,	'NOMBRE':	'desinfectante'	,	'PRECIO'	:	21},
+    {'ID_PROD'	:	'12',	'SECCION'	:	'limpieza'	,	'NOMBRE':	'jabon'	,	'PRECIO'	:	45},
+    {'ID_PROD'	:	'13',	'SECCION'	:	'limpieza'	,	'NOMBRE':	'guantes'	,	'PRECIO'	:	73},
+    {'ID_PROD'	:	'14',	'SECCION'	:	'jardineria',	'NOMBRE':	'pala'	,	'PRECIO'	:	85},
+    {'ID_PROD'	:	'15',	'SECCION'	:	'jardineria',	'NOMBRE':	'piocha' 	,	'PRECIO'	:	67},
+    {'ID_PROD'	:	'16',	'SECCION'	:	'jardineria',	'NOMBRE':	'manguera'	,	'PRECIO'	:	43},
+    {'ID_PROD'	:	'17', 	'SECCION'	:	'jardineria',	'NOMBRE':	'rastrillo'	,	'PRECIO'	:	56},
+    {'ID_PROD'	:	'18', 	'SECCION'	:	'jardineria',	'NOMBRE':	'maceta'	,	'PRECIO'	:	98},
+    {'ID_PROD'	:	'19',	'SECCION'	:	'jardineria',	'NOMBRE':	'exterminador'	,	'PRECIO'	:	76},
+    {'ID_PROD'	:	'20',	'SECCION'	:	'jardineria',	'NOMBRE':	'aspersor'	,	'PRECIO'	:	26}
+    ];
+
+	$('th').on('click', function(){
+		var column = $(this).data('column')
+		var order = $(this).data('order')
+		var text = $(this).html()
+		text = text.substring(0, text.length - 1)
+
+        //ordenar por desendente o ascendente
+        //usa la funcion sort, recore y compara los datos para posicionarlos en el orden deseado
+		if(order == 'desc'){
+			$(this).data('order', "asc")
+			myArray = myArray.sort((a,b) => a[column] > b[column] ? 1 : -1)
+			text += '&#9660'// ▲
+
+		}else{0
+			$(this).data('order', "desc")
+			myArray = myArray.sort((a,b) => a[column] < b[column] ? 1 : -1)
+			text += '&#9650'//▼
+
+		}
+        //Posiciona los valores ordenados en la tabla
+		$(this).html(text)
+		buildTable(myArray)
+	})
+
+	buildTable(myArray)
+    //Funciones para crear los datos
+	function buildTable(data){
+		var table = document.getElementById('myTable')
+		table.innerHTML = ''
+		for (var i = 0; i < data.length; i++){
+			var row = `<tr>
+							<td>${data[i].ID_PROD}</td>
+							<td>${data[i].SECCION}</td>
+							<td>${data[i].NOMBRE}</td>
+                            <td>${data[i].PRECIO}</td>
+					  </tr>`
+			table.innerHTML += row
+
+
+		}
+	}
+
+</script>
+</body>
+</html>
+
